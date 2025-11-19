@@ -1,0 +1,185 @@
+{
+  "info": {
+    "_postman_id": "c6d02018-3fb1-4dee-b8c6-1cfba7044a6b",
+    "name": "Auth Demo API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for https://auth-demo-three-psi.vercel.app"
+  },
+  "item": [
+    {
+      "name": "Signup - Start",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo+signup@example.com\",\n  \"fullName\": \"Demo User\",\n  \"phoneNumber\": \"+8801000000000\",\n  \"password\": \"Sup3rSecret!\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/signup",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "signup"]
+        }
+      }
+    },
+    {
+      "name": "Signup - Verify OTP",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo+signup@example.com\",\n  \"otp\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/signup/verify",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "signup", "verify"]
+        }
+      }
+    },
+    {
+      "name": "Signup - Resend OTP",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo+signup@example.com\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/signup/resend",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "signup", "resend"]
+        }
+      }
+    },
+    {
+      "name": "Signin - Start",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo+signup@example.com\",\n  \"password\": \"Sup3rSecret!\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/signin",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "signin"]
+        }
+      }
+    },
+    {
+      "name": "Signin - Verify OTP",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo+signup@example.com\",\n  \"otp\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/signin/verify",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "signin", "verify"]
+        }
+      }
+    },
+    {
+      "name": "Signin - Resend OTP",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo+signup@example.com\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/signin/resend",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "signin", "resend"]
+        }
+      }
+    },
+    {
+      "name": "Forgot Password - Start",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo+signup@example.com\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/password/forgot",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "password", "forgot"]
+        }
+      }
+    },
+    {
+      "name": "Forgot Password - Verify",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo+signup@example.com\",\n  \"otp\": \"123456\",\n  \"newPassword\": \"NewSup3rSecret!\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/password/forgot/verify",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "password", "forgot", "verify"]
+        }
+      }
+    },
+    {
+      "name": "Password - Update (JWT)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"currentPassword\": \"Sup3rSecret!\",\n  \"newPassword\": \"NewSup3rSecret!\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/password",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "password"]
+        }
+      }
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": { "type": "text/javascript", "exec": [] }
+    },
+    {
+      "listen": "test",
+      "script": { "type": "text/javascript", "exec": [] }
+    }
+  ],
+  "variable": [
+    {
+      "key": "jwtToken",
+      "value": "<paste token from signin/verify response>",
+      "type": "string"
+    }
+  ]
+}
