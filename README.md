@@ -86,6 +86,7 @@ The full SQL lives in `docs/schema.sql`.
 | `/api/v1/auth/signin/resend` | POST | Resend signin OTP |
 | `/api/v1/auth/password/forgot` | POST | Send OTP for password reset |
 | `/api/v1/auth/password/forgot/verify` | POST | Verify OTP + new password |
+| `/api/v1/auth/password/forgot/resend` | POST | Resend password-reset OTP |
 | `/api/v1/auth/password` | PATCH | Authenticated password change (JWT required) |
 
 JSON responses follow the examples in `internal/handlers/auth/handler.go`.

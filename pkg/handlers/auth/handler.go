@@ -31,6 +31,7 @@ func (h *Handler) Register(router *gin.RouterGroup, authRequired gin.HandlerFunc
 
 	router.POST("/password/forgot", h.forgotPassword)
 	router.POST("/password/forgot/verify", h.verifyForgotPassword)
+	router.POST("/password/forgot/resend", h.resendForgotPassword)
 
 	protected := router.Group("")
 	protected.Use(authRequired)
@@ -149,16 +150,16 @@ func (h *Handler) verifySignin(c *gin.Context) {
 		c.JSON(statusFromError(err), gin.H{"error": err.Error()})
 		return
 	}
-    c.JSON(http.StatusOK, gin.H{
-        "token":     result.Token,
-        "expiresAt": result.ExpiresAt,
-        "user": gin.H{
-            "id":          result.User.ID,
-            "email":       result.User.Email,
-            "fullName":    result.User.FullName,
-            "phoneNumber": result.User.PhoneNumber,
-        },
-    })
+	c.JSON(http.StatusOK, gin.H{
+		"token":     result.Token,
+		"expiresAt": result.ExpiresAt,
+		"user": gin.H{
+			"id":          result.User.ID,
+			"email":       result.User.Email,
+			"fullName":    result.User.FullName,
+			"phoneNumber": result.User.PhoneNumber,
+		},
+	})
 }
 
 func (h *Handler) resendSignin(c *gin.Context) {
@@ -189,6 +190,21 @@ func (h *Handler) forgotPassword(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusAccepted, gin.H{"message": "OTP sent to email"})
+}
+
+func (h *Handler) resendForgotPassword(c *gin.Context) {
+	var req struct {
+		Email string `json:"email"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid payload", "details": err.Error()})
+		return
+	}
+	if err := h.service.ResendForgotPassword(c.Request.Context(), req.Email); err != nil {
+		c.JSON(statusFromError(err), gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusAccepted, gin.H{"message": "OTP resent"})
 }
 
 func (h *Handler) verifyForgotPassword(c *gin.Context) {

@@ -359,6 +359,11 @@ func (s *Service) StartForgotPassword(ctx context.Context, emailAddr string) err
 	})
 }
 
+// ResendForgotPassword invalidates existing OTPs and sends another reset code.
+func (s *Service) ResendForgotPassword(ctx context.Context, emailAddr string) error {
+	return s.StartForgotPassword(ctx, emailAddr)
+}
+
 func (s *Service) CompleteForgotPassword(ctx context.Context, input ForgotPasswordVerifyInput) error {
 	email := normalizeEmail(input.Email)
 	if strings.TrimSpace(input.NewPassword) == "" {

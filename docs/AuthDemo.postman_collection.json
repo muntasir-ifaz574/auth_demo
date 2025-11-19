@@ -145,6 +145,23 @@
       }
     },
     {
+      "name": "Forgot Password - Resend",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo+signup@example.com\"\n}"
+        },
+        "url": {
+          "raw": "https://auth-demo-three-psi.vercel.app/api/v1/auth/password/forgot/resend",
+          "protocol": "https",
+          "host": ["auth-demo-three-psi", "vercel", "app"],
+          "path": ["api", "v1", "auth", "password", "forgot", "resend"]
+        }
+      }
+    },
+    {
       "name": "Password - Update (JWT)",
       "request": {
         "method": "PATCH",
