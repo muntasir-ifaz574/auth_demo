@@ -3,7 +3,7 @@ package server
 import (
 	"net/http"
 
-	authhandler "auth_demo/internal/handlers/auth"
+	authhandler "auth_demo/pkg/handlers/auth"
 
 	"github.com/gin-gonic/gin"
 )

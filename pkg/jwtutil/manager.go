@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"auth_demo/internal/models"
+	"auth_demo/pkg/models"
 
 	"github.com/golang-jwt/jwt/v5"
 )

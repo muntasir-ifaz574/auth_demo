@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"auth_demo/internal/email"
+	"auth_demo/pkg/email"
 )
 
 // Config represents the application configuration loaded from environment variables.

@@ -7,12 +7,12 @@ import (
 	"strings"
 	"time"
 
-	emailpkg "auth_demo/internal/email"
-	"auth_demo/internal/jwtutil"
-	"auth_demo/internal/models"
-	"auth_demo/internal/otp"
-	"auth_demo/internal/password"
-	"auth_demo/internal/repository"
+	emailpkg "auth_demo/pkg/email"
+	"auth_demo/pkg/jwtutil"
+	"auth_demo/pkg/models"
+	"auth_demo/pkg/otp"
+	"auth_demo/pkg/password"
+	"auth_demo/pkg/repository"
 
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"

@@ -6,7 +6,7 @@ import (
 	"errors"
 	"time"
 
-	"auth_demo/internal/models"
+	"auth_demo/pkg/models"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"

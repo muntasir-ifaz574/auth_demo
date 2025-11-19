@@ -3,8 +3,8 @@ package auth
 import (
 	"net/http"
 
-	"auth_demo/internal/server/middleware"
-	authsvc "auth_demo/internal/services/auth"
+	"auth_demo/pkg/server/middleware"
+	authsvc "auth_demo/pkg/services/auth"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"

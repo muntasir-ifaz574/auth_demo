@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"auth_demo/internal/jwtutil"
+	"auth_demo/pkg/jwtutil"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
