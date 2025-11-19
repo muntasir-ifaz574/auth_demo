@@ -26,7 +26,7 @@ The API is designed for deployment to Vercel and uses Supabase (Postgres) for pe
 
 3. **Start the API**
    ```bash
-   go run ./cmd/api
+   go run ./cmd/server
    ```
 
 4. **Test endpoints** using any HTTP client:

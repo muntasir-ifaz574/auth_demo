@@ -1,15 +1,10 @@
-package main
+package handler
 
 import (
 	"context"
-	"errors"
 	"log"
 	"net/http"
-	"os"
-	"os/signal"
 	"sync"
-	"syscall"
-	"time"
 
 	"auth_demo/internal/config"
 	emailpkg "auth_demo/internal/email"
@@ -92,34 +87,49 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	app.handler.ServeHTTP(w, r)
 }
 
-func main() {
-	baseCtx := context.Background()
-	app, err := initApplication(baseCtx)
-	if err != nil {
-		log.Fatalf("bootstrap error: %v", err)
-	}
+// App bundles the HTTP handler and config for long-running servers.
+type App struct {
+	Handler http.Handler
+	Port    string
+	closeFn func()
+}
 
-	httpServer := &http.Server{
+// Close releases underlying resources; safe to call multiple times.
+func (a *App) Close() {
+	if a != nil && a.closeFn != nil {
+		a.closeFn()
+		a.closeFn = nil
+	}
+}
+
+// NewApp bootstraps the application for local/server usage.
+func NewApp(ctx context.Context) (*App, error) {
+	app, err := initApplication(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &App{
+		Handler: app.handler,
+		Port:    app.cfg.Port,
+		closeFn: func() {
+			app.pool.Close()
+		},
+	}, nil
+}
+
+// NewHTTPServer builds an *http.Server using the shared handler.
+func NewHTTPServer(ctx context.Context) (*http.Server, func(context.Context) error, error) {
+	app, err := initApplication(ctx)
+	if err != nil {
+		return nil, nil, err
+	}
+	srv := &http.Server{
 		Addr:    ":" + app.cfg.Port,
 		Handler: app.handler,
 	}
-
-	go func() {
-		log.Printf("listening on :%s", app.cfg.Port)
-		if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Fatalf("server error: %v", err)
-		}
-	}()
-
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
-	<-stop
-	log.Println("shutting down server ...")
-
-	ctxShutdown, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	if err := httpServer.Shutdown(ctxShutdown); err != nil {
-		log.Printf("graceful shutdown failed: %v", err)
+	shutdown := func(ctx context.Context) error {
+		defer app.pool.Close()
+		return srv.Shutdown(ctx)
 	}
-	app.pool.Close()
+	return srv, shutdown, nil
 }
